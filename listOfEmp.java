@@ -238,15 +238,14 @@ public class listOfEmp {
 		}
 		
 		if(x==y) {
-			System.out.println("the common ancestor" + x.name); 
+			System.out.println("the common ancestor is: " + x.name); 
 		}
 		else{
 			while(x.parent!=y.parent) {
 				x=x.parent;
 				y=y.parent;
-				//System.out.println("While in Lowest Common Boss");
 			}
-			System.out.println("the common ancestor" + x.name);
+			System.out.println("The common ancestor is: " + x.parent.name);
 		}
 	}
 	
@@ -276,8 +275,9 @@ public class listOfEmp {
 	  
 	  for(int i=2; i<=n; i++){
 		  st=s.readLine();
-		  s1= st.split(" ")[0];
-		  s2= st.split(" ")[1];
+		  String array1[]= st.split(" ");
+		  s1= array1[0];
+		  s2= array1[1];
 		 
 		  Node r = new Node(s1,null);
 		  
@@ -327,7 +327,7 @@ public class listOfEmp {
 	
 
 	public static void main(String[] args) throws FileNotFoundException, NullPointerException, IOException {
-		Input("t.txt");
+		Input("test_case1.txt");
 		//System.out.println(root.children.head.children.head.next.children.head.name);
 	}
 }
