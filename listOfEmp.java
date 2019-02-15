@@ -5,7 +5,6 @@ import java.util.*;
 class Node{
 	String name;
 	int level;
-	int key;
 	Node parent;
 	LinkedList<Node> children = new LinkedList<Node>();
 	
@@ -18,23 +17,55 @@ class Node{
 class BSTNode{
 	String name;
 	BSTNode parent;
-	BSTNode lchild;
-	BSTNode rchild;
+	BSTNode lchild=null;
+	BSTNode rchild=null;
 	Node ref;
 }
 public class listOfEmp {
 	
-	static boolean Compare(BSTNode q, BSTNode w) {
-		
-	}
-	
 	static BSTNode BSTroot;
 	
-	static void BSTInsert(BSTNode t) {
-		
+	
+	static void BSTInsert(String y, Node r) {
+		BSTNode t = BSTroot;
+		while(t.lchild != null && t.rchild != null) {
+			if(y.compareTo(t.name)<0) {
+				t=t.lchild;
+			}
+			else if(y.compareTo(t.name)>0) {
+				t=t.rchild;
+			}
+		}
+		if(y.compareTo(t.name)<0) {
+			BSTNode nnode = new BSTNode();
+			t.lchild = nnode;
+			nnode.name = y;
+			nnode.ref = r;
+			nnode.parent = t;
+		}
+		else {
+			BSTNode nnode = new BSTNode();
+			t.rchild = nnode;
+			nnode.name = y;
+			nnode.ref = r;
+			nnode.parent = t;
+		}
 	}
 	
 	static Node Search(String x) {
+		BSTNode t = BSTroot;
+		while(t.name!=x && t!=null) {
+			if(x.compareTo(t.name)<0) {
+				t=t.lchild;
+			}
+			else if(x.compareTo(t.name)>0) {
+				t=t.rchild;
+			}
+		}
+		return t.ref;
+	}
+	
+	static void AddEmployee(String S, String Sp) throws NullPointerException{
 		
 	}
 	
@@ -46,17 +77,19 @@ public class listOfEmp {
 	  String st, s1, s2;
 	  int n = Integer.parseInt(s.readLine());
 	  
-	  s1 = s.readLine().split(" ")[0];
-	  s2 = s.readLine().split(" ")[1];
+	  st = s.readLine();
+	  s1 = st.split(" ")[0];
+	  s2 = st.split(" ")[1];
+	  
 	  Node q = new Node(s2,null);
 	  Node p = new Node(s1,null);
 	  q.children.add(p);
 	  p.parent = q;
+	  
 	  BSTroot.name = s2;
 	  BSTroot.ref = q;
 	  BSTroot.parent = null;
-	  BSTroot.lchild = null;
-	  BSTroot.rchild = null;
+	  BSTInsert(s1, p);
 	  
 	  for(int i=2; i<=n; i++){
 		  st=s.readLine();
@@ -73,6 +106,8 @@ public class listOfEmp {
 		  else {
 			  searched.children.add(r);
 			  r.parent=searched;
+			  r.level = searched.level + 1;
+			  BSTInsert(s1, r);
 		};
 		  
 	//Space for the part to enter read and implement the queries
