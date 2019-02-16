@@ -100,57 +100,49 @@ public class listOfEmp {
 		}
 	}
 	
-	static void BSTDelete(String y) {
-		BSTNode t = BSTroot;
-		int l=-1;
-		while(y.compareTo(t.name)!=0 && t!=null) {
-			//System.out.println("While in BDelete");
-			if(y.compareTo(t.name)<0) {
-				t=t.lchild;
-				l=1;
-			}
-			else if(y.compareTo(t.name)>0) {
-				t=t.rchild;
-				l=0;
-			}
+	static String nextnum(BSTNode r) {
+		String nextNum = r.name;
+		while(r.lchild != null) {
+			nextNum = r.lchild.name;
+			r = r.lchild;
+		}
+		return nextNum;
+	}
+	
+	static BSTNode BDelete(BSTNode X, String Y) {
+		if (X==null) {
+			return X;
+		}
+		if(Y.compareTo(X.name)<0) {
+			X.lchild = BDelete(X.lchild, Y);
+		}
+		else if(Y.compareTo(X.name)>0) {
+			X.rchild = BDelete(X.rchild, Y);
 		}
 		
-		if(t.lchild==null && t.rchild==null) {
-			if(l==1) {
-				t.parent.lchild=null;
-			}
-			else if(l==0) {
-				t.parent.rchild=null;
-			}
-		}
-		else if(t.lchild==null) {
-			t=t.rchild;
-			t.rchild=null;
-		}
-		else if(t.rchild==null ) {
-			t=t.lchild;
-			t.lchild=null;
-		}
 		else {
-			BSTNode min=t.rchild;
-			while(min.lchild!=null) {
-				min=min.lchild;
+			if(X.lchild == null) {
+				return X.rchild;
 			}
-			t.name=min.name;
-			t.lchild=min.lchild;
-			t.rchild=min.rchild;
-			t.parent=min.parent;
-			t.ref=min.ref;
-			min.parent.lchild=null;
+			else if(X.rchild == null) {
+				return X.lchild;
+			}
 			
+			X.name = nextnum(X.rchild);
+			
+			X.rchild = BDelete(X.rchild, X.name);
 		}
+		return X;
+	}
+	static void BSTDelete(String y) {
+		BSTroot = BDelete(BSTroot, y);
 	}
 	
 	static Node Search(String x) {
 		BSTNode t = BSTroot;
 		//System.out.println(t.name);
 		//System.out.println(t.rchild.name);
-		while(x.compareTo(t.name)!=0 && t!=null) {
+		while(t!=null && x.compareTo(t.name)!=0) {
 			//System.out.println(t.name);
 			if(x.compareTo(t.name)<0) {
 				//System.out.println("While in Searchl: " + t.name);
@@ -167,16 +159,16 @@ public class listOfEmp {
 	}
 	
 	static void AddEmployee(String Sp, String S) {
-		try {
+		//try {
 		Node searched = Search(S);
 		Node e = new Node(Sp, searched);
 		searched.children.add(e);
 		e.level = searched.level + 1;
 		BSTInsert(Sp,e);
-		}
-		catch(NullPointerException e) {
-			System.out.println("The Parent doesn't exist");
-		}
+		//}
+		//catch(NullPointerException e) {
+			//System.out.println("The Parent doesn't exist");
+		//}
 	}
 	
 	static void DeleteEmployee(String S, String Sp) throws NullPointerException{
@@ -192,7 +184,8 @@ public class listOfEmp {
 				x.parent=searched2;
 				x=x.next;
 			}
-			if(searched2.children.tail==null && searched2.children.head==null) {
+			if(searched1.children.tail==null && searched1.children.head==null) {}
+			else if(searched2.children.tail==null && searched2.children.head==null) {
 				searched2.children.head=searched1.children.head;
 				searched2.children.tail=searched1.children.tail;
 			}
@@ -222,7 +215,9 @@ public class listOfEmp {
 	}
 	
 	static void LowestCommonBoss(String S, String Sp) {
+		//try{
 		Node searched1 = Search(S);
+		
 		Node searched2 = Search(Sp);
 		Node x = searched1;
 		Node y = searched2;
@@ -247,13 +242,15 @@ public class listOfEmp {
 			}
 			System.out.println("The common ancestor is: " + x.parent.name);
 		}
+		//}
+		//catch(NullPointerException e) {System.out.println("The given node doesn't exist");}
 	}
 	
 	static void Input(String x) throws FileNotFoundException, IOException, NullPointerException {
 	  File file = new File(x); 
 	  BufferedReader s = new BufferedReader(new FileReader(file)); 
 	  String st, s1, s2;
-	  int n = Integer.parseInt(s.readLine());
+	  int n = Integer.parseInt(s.readLine())-1;
 	  
 	  st = s.readLine();
 	  
@@ -278,6 +275,7 @@ public class listOfEmp {
 		  String array1[]= st.split(" ");
 		  s1= array1[0];
 		  s2= array1[1];
+		  //catch(ArrayIndexOutOfBoundsException e) {System.out.println(st);}
 		 
 		  Node r = new Node(s1,null);
 		  
@@ -308,13 +306,22 @@ public class listOfEmp {
 			String array2[]= st.split(" ");
 			
 			if(m==0) {
-				AddEmployee(array2[1], array2[2]);
+				try{
+					AddEmployee(array2[1], array2[2]);
+				}
+				catch(NullPointerException e) {System.out.println("ERROR: AddEmp "+ st);}
 			}
 			else if(m==1) {
-				DeleteEmployee(array2[1], array2[2]);
+				try{
+					DeleteEmployee(array2[1], array2[2]);
+				}
+				catch(NullPointerException e) {System.out.println("ERROR: DelEmp "+ st);}
 			}
 			else if(m==2) {
-				LowestCommonBoss(array2[1], array2[2]);
+				try{
+					LowestCommonBoss(array2[1], array2[2]);
+				}
+				catch(NullPointerException a) {System.out.println("ERROR: LowBos "+ st);}
 			}
 			else if(m==3) {
 				PrintEmployees();
@@ -328,6 +335,6 @@ public class listOfEmp {
 
 	public static void main(String[] args) throws FileNotFoundException, NullPointerException, IOException {
 		Input("test_case1.txt");
-		//System.out.println(root.children.head.children.head.next.children.head.name);
+		//System.out.println(BSTroot.rchild.lchild.rchild.lchild.name);
 	}
 }
