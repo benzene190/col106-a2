@@ -233,14 +233,14 @@ public class listOfEmp {
 		}
 		
 		if(x==y) {
-			System.out.println("the common ancestor is: " + x.name); 
+			System.out.println(x.name); 
 		}
 		else{
 			while(x.parent!=y.parent) {
 				x=x.parent;
 				y=y.parent;
 			}
-			System.out.println("The common ancestor is: " + x.parent.name);
+			System.out.println(x.parent.name);
 		}
 		//}
 		//catch(NullPointerException e) {System.out.println("The given node doesn't exist");}
@@ -309,19 +309,19 @@ public class listOfEmp {
 				try{
 					AddEmployee(array2[1], array2[2]);
 				}
-				catch(NullPointerException e) {System.out.println("ERROR: AddEmp "+ st);}
+				catch(NullPointerException e) {}
 			}
 			else if(m==1) {
 				try{
 					DeleteEmployee(array2[1], array2[2]);
 				}
-				catch(NullPointerException e) {System.out.println("ERROR: DelEmp "+ st);}
+				catch(NullPointerException e) {}
 			}
 			else if(m==2) {
 				try{
 					LowestCommonBoss(array2[1], array2[2]);
 				}
-				catch(NullPointerException a) {System.out.println("ERROR: LowBos "+ st);}
+				catch(NullPointerException a) {}
 			}
 			else if(m==3) {
 				PrintEmployees();
@@ -334,7 +334,6 @@ public class listOfEmp {
 	
 
 	public static void main(String[] args) throws FileNotFoundException, NullPointerException, IOException {
-		Input("test_case1.txt");
-		//System.out.println(BSTroot.rchild.lchild.rchild.lchild.name);
+		Input(args[0]);
 	}
 }
