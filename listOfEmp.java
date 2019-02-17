@@ -74,12 +74,9 @@ public class listOfEmp {
 			tt=t;
 			if(y.compareTo(t.name)<0) {
 				t=t.lchild;
-				//System.out.println("While in BInsert");
 			}
 			else {
 				t=t.rchild;
-				//System.out.println(t.name);
-				//System.out.println("While in BInsert");
 			}
 		}
 		if(y.compareTo(tt.name)<0) {
@@ -88,7 +85,6 @@ public class listOfEmp {
 			nnode.ref = r;
 			nnode.parent = tt;
 			tt.lchild = nnode;
-			//System.out.println("if in BInsert");
 		}
 		else {
 			BSTNode nnode = new BSTNode();
@@ -96,7 +92,6 @@ public class listOfEmp {
 			nnode.ref = r;
 			nnode.parent = tt;
 			tt.rchild = nnode;
-			//System.out.println("else in BInsert");
 		}
 	}
 	
@@ -140,17 +135,12 @@ public class listOfEmp {
 	
 	static Node Search(String x) {
 		BSTNode t = BSTroot;
-		//System.out.println(t.name);
-		//System.out.println(t.rchild.name);
 		while(t!=null && x.compareTo(t.name)!=0) {
-			//System.out.println(t.name);
 			if(x.compareTo(t.name)<0) {
-				//System.out.println("While in Searchl: " + t.name);
 				t=t.lchild;
 				
 			}
 			else if(x.compareTo(t.name)>0) {
-				//System.out.println("While in Searchr: " + t.name);
 				t=t.rchild;
 			}
 		}
@@ -159,16 +149,12 @@ public class listOfEmp {
 	}
 	
 	static void AddEmployee(String Sp, String S) {
-		//try {
 		Node searched = Search(S);
 		Node e = new Node(Sp, searched);
 		searched.children.add(e);
 		e.level = searched.level + 1;
 		BSTInsert(Sp,e);
-		//}
-		//catch(NullPointerException e) {
-			//System.out.println("The Parent doesn't exist");
-		//}
+		
 	}
 	
 	static void DeleteEmployee(String S, String Sp) throws NullPointerException{
@@ -215,7 +201,6 @@ public class listOfEmp {
 	}
 	
 	static void LowestCommonBoss(String S, String Sp) {
-		//try{
 		Node searched1 = Search(S);
 		
 		Node searched2 = Search(Sp);
@@ -242,8 +227,7 @@ public class listOfEmp {
 			}
 			System.out.println(x.parent.name);
 		}
-		//}
-		//catch(NullPointerException e) {System.out.println("The given node doesn't exist");}
+		
 	}
 	
 	static void Input(String x) throws FileNotFoundException, IOException, NullPointerException {
@@ -275,20 +259,17 @@ public class listOfEmp {
 		  String array1[]= st.split(" ");
 		  s1= array1[0];
 		  s2= array1[1];
-		  //catch(ArrayIndexOutOfBoundsException e) {System.out.println(st);}
 		 
 		  Node r = new Node(s1,null);
 		  
-		  Node searched = Search(s2);
-		  if(searched==null) {
-			  throw new NullPointerException("No employee with the given name exists");
-		  }
-		  else {
-			  searched.children.add(r);
+		  try{
+			  Node searched = Search(s2);
+		  	  searched.children.add(r);
 			  r.parent = searched;
 			  r.level = searched.level + 1;
 			  BSTInsert(s1, r);
 		}
+		  catch(NullPointerException e) {System.exit(0);}
 	  }	  
 	
 		int m;
@@ -309,19 +290,19 @@ public class listOfEmp {
 				try{
 					AddEmployee(array2[1], array2[2]);
 				}
-				catch(NullPointerException e) {}
+				catch(NullPointerException e) {System.exit(0);}
 			}
 			else if(m==1) {
 				try{
 					DeleteEmployee(array2[1], array2[2]);
 				}
-				catch(NullPointerException e) {}
+				catch(NullPointerException e) {System.exit(0);}
 			}
 			else if(m==2) {
 				try{
 					LowestCommonBoss(array2[1], array2[2]);
 				}
-				catch(NullPointerException a) {}
+				catch(NullPointerException a) {System.exit(0);}
 			}
 			else if(m==3) {
 				PrintEmployees();
