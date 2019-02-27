@@ -215,7 +215,7 @@ public class listOfEmp {
 			//}
 		}
 		else if(searched1.level>searched2.level) {
-			while(x.level!=searched1.level){
+			while(x.level!=searched2.level){
 				x=x.parent;
 			}
 		}
