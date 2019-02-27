@@ -314,7 +314,7 @@ public class listOfEmp {
 	    
 	
 
-	public static void main(String[] args) throws FileNotFoundException, NullPointerException, IOException {
-		Input(args[0]);
+	public static void main(String[] args) throws NullPointerException, IOException {
+		Input("text.txt");
 	}
 }
