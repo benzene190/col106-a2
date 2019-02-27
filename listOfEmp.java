@@ -315,6 +315,6 @@ public class listOfEmp {
 	
 
 	public static void main(String[] args) throws NullPointerException, IOException {
-		Input("test.txt");
+		Input("test3.txt");
 	}
 }
