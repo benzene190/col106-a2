@@ -161,10 +161,10 @@ public class listOfEmp {
 		Node searched1 = Search(S);
 		Node searched2 = Search(Sp);
 		
-		if(searched1==null || searched2==null) {
+		/*if(searched1==null || searched2==null) {
 			throw new NullPointerException("The specified node does not exist");
 		}
-		else {
+		else {*/
 			Node x = searched1.children.head;
 			while(x!=null) {
 				x.parent=searched2;
@@ -183,7 +183,7 @@ public class listOfEmp {
 			searched1.parent.children.remove(searched1);
 			BSTDelete(S);
 			
-		}
+		//}
 	}
 	
 	static void PrintEmployees() {
@@ -201,18 +201,21 @@ public class listOfEmp {
 	}
 	
 	static void LowestCommonBoss(String S, String Sp) {
-		Node searched1 = Search(S);
+		try{Node searched1 = Search(S);
 		
 		Node searched2 = Search(Sp);
 		Node x = searched1;
 		Node y = searched2;
 		if(searched1.level<searched2.level) {
-			for(int i=1; i<=(searched2.level-searched1.level); i++) {
+			while(y.level!=searched1.level){
 				y=y.parent;
-			}
+			}			
+			//for(int i=1; i<=(searched2.level-searched1.level); i++) {
+			//	y=y.parent;
+			//}
 		}
 		else if(searched1.level>searched2.level) {
-			for(int i=1; i<=(searched1.level-searched2.level); i++) {
+			while(x.level!=searched1.level){
 				x=x.parent;
 			}
 		}
@@ -227,6 +230,8 @@ public class listOfEmp {
 			}
 			System.out.println(x.parent.name);
 		}
+		}
+		catch(NullPointerException e){System.out.println("ERR");}
 		
 	}
 	
@@ -262,14 +267,14 @@ public class listOfEmp {
 		 
 		  Node r = new Node(s1,null);
 		  
-		  try{
+		 
 			  Node searched = Search(s2);
 		  	  searched.children.add(r);
 			  r.parent = searched;
 			  r.level = searched.level + 1;
 			  BSTInsert(s1, r);
-		}
-		  catch(NullPointerException e) {System.exit(0);}
+		
+		  
 	  }	  
 	
 		int m;
@@ -287,22 +292,19 @@ public class listOfEmp {
 			String array2[]= st.split(" ");
 			
 			if(m==0) {
-				try{
 					AddEmployee(array2[1], array2[2]);
 				}
-				catch(NullPointerException e) {System.exit(0);}
-			}
 			else if(m==1) {
-				try{
+				
 					DeleteEmployee(array2[1], array2[2]);
-				}
-				catch(NullPointerException e) {System.exit(0);}
+				
+				
 			}
 			else if(m==2) {
-				try{
+				
 					LowestCommonBoss(array2[1], array2[2]);
-				}
-				catch(NullPointerException a) {System.exit(0);}
+				
+				
 			}
 			else if(m==3) {
 				PrintEmployees();
@@ -315,6 +317,6 @@ public class listOfEmp {
 	
 
 	public static void main(String[] args) throws NullPointerException, IOException {
-		Input("test3.txt");
+		Input(args[0]);
 	}
 }
