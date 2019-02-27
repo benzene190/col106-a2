@@ -218,7 +218,7 @@ public class listOfEmp {
 		}
 		
 		if(x==y) {
-			System.out.println(x.name); 
+			System.out.println(x.parent.name); 
 		}
 		else{
 			while(x.parent!=y.parent) {
@@ -315,6 +315,6 @@ public class listOfEmp {
 	
 
 	public static void main(String[] args) throws NullPointerException, IOException {
-		Input("text.txt");
+		Input("test.txt");
 	}
 }
